@@ -1,0 +1,22 @@
+connection: propel
+noXsd: false
+defaultIdMethod: native
+package: plugins.iceSpamControlPlugin.lib.model
+encoding: utf8
+
+classes:
+  SpamControl:
+    phpName: iceModelSpamControl
+    columns:
+      id:  ~
+      field: { type: char, sqlType: "ENUM('email','phone','ip','regex','session')", default: 'regex', required: true }
+      value: { type: varchar, size: 64, required: true }
+      credentials: { type: char, sqlType: "SET('read', 'create', 'edit', 'comment')", default: 'read', required: true }
+      is_banned: { type: boolean, sqlType: "BOOL", required: true, default: false }
+      is_throttled: { type: boolean, sqlType: "BOOL", required: true, default: false }
+
+    uniques:
+      spam_control_U_1: [field, value]
+
+    propel_behaviors:
+      timestampable: ~
